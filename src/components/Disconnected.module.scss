@@ -1,0 +1,27 @@
+@import "../variables.scss";
+
+.disconnected {
+    .disconnectedMsgContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: calc(100vh - 210px);
+        .message {
+            font-size: $Large;
+            color: $Black;
+            font-weight: 200;
+            margin-top: 20px;
+        }
+        .connectButton {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+            .text {
+                margin-left: 4px;
+            }
+        }
+    }
+}

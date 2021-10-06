@@ -1,0 +1,58 @@
+@import "../variables.scss";
+
+.pending {
+    padding: 20px 60px 40px 60px;
+    .pendingContainer {
+        .title {
+            font-size: $Large;
+            color: $Black;
+            text-align: center;
+            padding: 40px;
+            font-weight: 600;
+        }
+        .pendingItemRow {
+            background-color: $White;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            padding: 20px 10px;
+            .nameContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                .text{
+                    color: $Black;
+                    font-size: $Small;
+                    margin-left: 5px;
+                }
+            }
+            .loadingContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                .text {
+                    font-size: $xSmall;
+                    color: $DarkGrey;
+                    margin-left: 5px;
+                }
+            }
+            .actionContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                .icon {
+                    font-size: $xSmall;
+                    color: $Primary;
+                }
+                .text {
+                    color: $Primary;
+                    font-size: $xSmall;
+                    padding-left: 5px;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

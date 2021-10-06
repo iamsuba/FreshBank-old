@@ -1,0 +1,38 @@
+@import "../variables.scss";
+
+.footer {
+    background-color: $Black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: $DarkGrey;
+    padding: 20px 0px;
+    .footerLeft {
+        text-align: left;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        font-size: $xSmall;
+        .links {
+            margin-left: 20px;
+            a {
+                text-decoration: none;
+                color: $DarkGrey;
+                margin-right: 10px;
+            }
+        }
+    }
+    .footerCenter {
+        text-align: center;
+        .socialIcon {
+            font-size: $Small;
+            color: $DarkGrey;
+            margin-right: 10px;
+        }
+    }
+    .footerRight {
+        text-align: right;
+        font-size: $xSmall;
+    }
+}

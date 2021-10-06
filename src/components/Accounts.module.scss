@@ -1,0 +1,157 @@
+@import "../variables.scss";
+
+.accounts {
+    padding: 20px 60px 40px 60px;
+    .tabsTitleContainer {
+        border: none;
+        justify-content: center;
+        .tabTitle {
+            background-color: transparent;
+            border: none;
+            font-size: $Large;
+            font-weight: 200;
+            color: $DarkGrey;
+            padding: 40px;
+            justify-content: center;
+        }
+    }
+    .tabContent {
+        .accountCardContainer {
+            margin-bottom: 20px;
+            .accountCard {
+                background-color: $White;
+                border-radius: 8px;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                min-height: 575px;
+                height: 100%;
+                width: 100%;
+                .header {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    .assetTitle {
+                        font-size: $Medium;
+                        margin-left: 10px;
+                    }
+                }
+                .content {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    margin-top: 40px;
+                    margin-bottom: 40px;
+                    .item {
+                        width: 100%;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        align-items: flex-start;
+                        padding: 15px 0px;
+                        border-bottom: 1px solid $LightGrey;
+                        &:last-child {
+                            border: none;
+                        }
+                        .label {
+                            font-size: $Small;
+                            color: $DarkGrey;
+                        }
+                        .valueContainer {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: flex-start;
+                            align-items: flex-end;
+                            .value {
+                                color: $Black;
+                                font-size: $Small;
+                            }
+                            .subValue {
+                                font-size: $xSmall;
+                                color: $DarkGrey;
+                            }
+                        }
+                    }
+                }
+                .footer {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: center;
+                    .footerButton {
+                        flex: 1;
+                        &:first-child {
+                            margin-right: 5px;
+                        }
+                        &:last-child {
+                            margin-left: 5px;
+                        }
+                    }
+                }
+                .loansFooter {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                    align-items: center;
+                    .footerButton {
+                        width: 100%;
+                    }
+                    .footer {
+                        margin-top: 10px;
+                    }
+                }
+                .emptyMessage {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    flex: 1;
+                    .icon {
+                        color: $Primary;
+                        font-size: $xLarge;
+                    }
+                    .message {
+                        font-size: $Medium;
+                        font-weight: 300;
+                        color: $DarkGrey;
+                    }
+                }
+            }
+        }
+        .emptyContainer {
+            background-color: $White;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 500px;
+            .icon {
+                height: 48px;
+                width: 48px;
+                color: $DarkGrey;
+            }
+            .text {
+                font-size: $Large;
+                color: $Black;
+            }
+            .subText {
+                font-size: $Small;
+                color: $DarkGrey;
+                font-weight: 300;
+            }
+            .depositButton {
+                margin-top: 20px;
+            }
+        }
+    }
+}

@@ -1,0 +1,64 @@
+@import './variables.scss';
+
+$theme-colors: (
+    "primary": $Primary,
+    "secondary": $Secondary,
+    "highlight": $Highlight,
+    "darkgrey": $DarkGrey,
+    "black": $Black
+);
+
+@import "~bootstrap/scss/bootstrap.scss";
+
+body {
+    background-color: $BgGradient;
+}
+
+//Button components
+.btn {
+    font-size: $xSmall;
+}
+.default-value-btn {
+    border-radius: 0.25rem !important;
+    margin-right: 10px;
+    input[type=radio] {
+        position: absolute;
+        clip: rect(0,0,0,0);
+        pointer-events: none;
+    }
+}
+
+.nav-tabs {
+    .nav-link {
+        &.active {
+            color: $Primary !important;
+            font-weight: 600 !important;
+        }
+    }
+}
+
+//dropdown toggle
+.dropup {
+    .dropdown-toggle {
+        background-color: $Primary;
+        color: $White;
+        border-radius: 4px;
+        .btn {
+            color: $White;
+        }
+    }
+    .dropdown-menu {
+        background-color: $Primary;
+        color: $White;
+        padding: 10px;
+    }
+}
+
+//Modals
+.modal-dialog {
+    margin: 0;
+    width: 100%;
+    max-width: none;
+    bottom: 0;
+    position: fixed;
+}

@@ -1,0 +1,75 @@
+@import "../../variables.scss";
+
+.markets {
+    background-color: radial-gradient(140.14% 84.18% at 37.5% 19.23%, #E0E7F2 0%, #F4F7FC 59.38%);
+    .marketsContainer {
+        padding: 40px 0px;
+        .titleContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 50px;
+            .title {
+                font-size: $xLarge;
+                font-weight: 600;
+            }
+            .closeButton {
+                font-size: $xLarge;
+                font-weight: 200;
+            }
+        }
+        .marketHeader {
+            font-size: $xSmall;
+            color: $DarkGrey;
+            .name {
+                text-align: left;
+            }
+            .value {
+                text-align: right;
+            }
+            .actions {
+                text-align: right;
+            }
+        }
+        .marketRowItem {
+            padding: 20px 0px;
+            border-bottom: 1px solid $LightGrey;
+            &:last-child {
+                border: none;
+            }
+            .nameContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                .text {
+                    font-size: $Small;
+                    margin-left: 5px;
+                    font-weight: 600;
+                }
+            }
+            .valueContainer {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-end;
+                .value {
+                    font-size: $xSmall;
+                    font-weight: 500;
+                }
+                .valueSmall {
+                    font-size: $xxSmall;
+                    text-align: right;
+                }
+            }
+            .actionsContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                grid-gap: 10px;
+            }
+        }
+    }
+}
