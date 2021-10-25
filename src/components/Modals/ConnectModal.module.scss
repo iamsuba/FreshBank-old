@@ -1,0 +1,69 @@
+@import "../../variables.scss";
+
+.connectModal {
+    background-color: radial-gradient(140.14% 84.18% at 37.5% 19.23%, #E0E7F2 0%, #F4F7FC 59.38%);
+    .connectModalContainer {
+        padding: 40px 0px;
+        .headerContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 50px;
+            .titleContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                .title {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    .text {
+                        font-size: $xLarge;
+                        font-weight: 600;
+                        margin-left: 10px;
+                    }
+                }
+                .description {
+                    font-size: $Small;
+                    font-weight: 300;
+                    margin-left: 20px;
+                    padding-left: 20px;
+                    border-left: 1px solid $MediumGrey;
+                }
+            }
+            .closeButton {
+                font-size: $xLarge;
+                font-weight: 200;
+            }
+        }
+        .contentContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .content {
+                margin: 20px 30px 60px 30px;
+                .tile {
+                    border: 1px solid $MediumGrey;
+                    height: 250px;
+                    width: 200px;
+                    margin-right: 20px;
+                    .title {
+                        margin-top: 10px;
+                        font-size: $Medium;
+                        color: $Black;
+                    }
+                }
+            }
+            .footer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                grid-gap: 10px;
+            }
+        }
+    }
+}

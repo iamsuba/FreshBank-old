@@ -19,9 +19,51 @@
                 font-weight: 200;
             }
         }
+        .controlsContainer {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-self: center;
+            padding-bottom: 20px;
+            .statsContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                grid-gap: 30px;
+                .item {
+                    .label {
+                        font-size: $xSmall;
+                        color: $DarkGrey;
+                    }
+                    .value {
+                        font-size: $xSmall;
+                        color: $Black;
+                        font-weight: 600;
+                    }
+                }
+            }
+            .filtersContainer {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                grid-gap: 20px;
+                .tabsContainer {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    align-items: flex-end;
+                    grid-gap: 5px;
+                }
+            }
+        }
         .marketHeader {
-            font-size: $xSmall;
+            font-size: $xxSmall;
             color: $DarkGrey;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            background-color: $LightGrey;
             .name {
                 text-align: left;
             }

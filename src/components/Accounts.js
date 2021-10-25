@@ -1,29 +1,36 @@
-import React, { useState } from 'react'
-import { Container, Row, Col, Button, Modal, Nav, Tab, Form } from 'react-bootstrap'
+import React, {useContext, useState, useRef} from 'react'
+import {Container, Nav, Tab, Row, Col, Button, Form, Modal, Dropdown, OverlayTrigger, Tooltip} from 'react-bootstrap'
 import styles from './Accounts.module.scss'
 import EthereumLogo from '../images/markets/eth.svg'
 import { IoAddCircle } from 'react-icons/io5'
 import { IoInformationCircleSharp } from 'react-icons/io5'
 import MarketsModal from './Modals/MarketsModal'
 import DepositModal from './Modals/DepositModal'
+import BorrowModal from './Modals/BorrowModal'
+import { useTranslation } from 'react-i18next'
+import ContentLoader from 'react-content-loader'
+import FetchData from '../methods/FetchData'
+import CoreData from '../methods/CoreData'
+import { FaExternalLinkAlt } from 'react-icons/fa'
+import log from '../utils/logger'
+import { NetworkTypeContext, WalletAddressContext, Web3Context } from '../context'
+import BigNumber from 'bignumber.js'
+import Variables from '../variables.scss'
 
-//Temporary
-const SavingsAccountsList = [
-    'Ethereum',
-    'USDT',
-    'FilDA',
-    'Huobi'
-]
-const LoansAccountsList = [
-    'Ethereum',
-    'USDT',
-    'FilDA'
-]
+function Accounts(props) {
 
-function Accounts() {
+    const { connectedAddress } = useContext(WalletAddressContext)
+    const { networkType } = useContext(NetworkTypeContext)
+    const { web3 } = useContext(Web3Context)
+    const [selectMarketData, setSelectMarketData] = useState(props.data[0])
 
     const [showMarketsModal, setShowMarketsModal] = useState(false)
     const [showDepositModal, setShowDepositModal] = useState(false)
+    const [showBorrowModal, setShowBorrowModal] = useState(false)
+
+    let loading = props.data.loading === undefined ? true
+                : connectedAddress === undefined ? true
+                : props.data.loading
 
     const handleClose = (mode) => {
         switch(mode) {
@@ -47,10 +54,13 @@ function Accounts() {
         }
       }
 
-    const toggleModal = (closeMode, showMode) => {
+    const toggleModal = (closeMode, showMode, marketData) => {
+        setSelectMarketData(marketData)
         handleClose(closeMode)
         handleShow(showMode)
     }
+
+    const { t } = useTranslation()
 
     const SavingsEmpty = 
         <div className={styles.emptyContainer}>
@@ -60,50 +70,87 @@ function Accounts() {
             <Button variant="primary" className={styles.depositButton} onClick={() => handleShow('markets')}> <IoAddCircle /> Deposit asset</Button>
         </div>
 
-    const SavingsAccounts = SavingsAccountsList.map(account => {
+    const AccountsLoading = 
+        <ContentLoader
+            height={400}
+            width={"100%"}
+            speed={1}
+            backgroundColor={Variables.$White}
+            foregroundColor="#EEF2F9">
+            {/* Only SVG shapes */}
+            <rect x="0" y="20" rx="4" ry="4" width="100%" height="40" />
+            <rect x="0" y="80" rx="4" ry="4" width="100%" height="20" />
+            <rect x="0" y="120" rx="4" ry="4" width="100%" height="300" />
+        </ContentLoader>
+    
+    const DepositAsset =  
+        <Col lg={3} md={4} sm={12} className={styles.accountCardContainer}>
+            <div className={styles.accountCard}>
+                <div className={styles.emptyMessage}>
+                    <IoAddCircle className={styles.icon} />
+                    <div className={styles.message} style={{ 'cursor': 'pointer' }} onClick={() => handleShow('markets')}>Deposit an asset</div>
+                </div>
+            </div>
+        </Col>
+
+
+    const handleCollateral = () => {
+        alert('Handle collateral not implemented')
+    }
+
+    const SavingsAccounts = props.data.map((market,i) => {
+        const excludeSwapPairs = ["NEO", "HXTZ", "HBSV", "htELA", "HELA"]
         return(
-            <Col lg={3} md={4} sm={12} className={styles.accountCardContainer}>
+            market.savingsBalance > 0 ?
+            <Col lg={3} md={4} sm={12} className={styles.accountCardContainer} key={i}>
                 <div  className={styles.accountCard}>
                     <div className={styles.header}>
                         <img
-                            src={EthereumLogo}
+                            src={market.logo}
                             width="auto"
                             height="24"
                             alt="token logo"
                         />
-                        <div className={styles.assetTitle}>{account}</div>
+                        <div className={styles.assetTitle}>{market.name}</div>
                     </div>
                     <div className={styles.content}>
                         <div className={styles.item}>
                             <div className={styles.label}>Collateral</div>
                             <div className={styles.value}>
-                                <Form>
-                                    <Form.Switch
-                                        id="custom-switch"
-                                    />
+                                <Form className={styles.collateralWrap}>
+                                    <Form.Check
+                                        type="switch"
+                                        id={market.symbol + '-switch'}
+                                        label=''
+                                        checked={market.collateralStatus}
+                                        onChange={() => handleCollateral(market)} />
                                 </Form>
                             </div>
                         </div>
                         <div className={styles.item}>
-                            <div className={styles.label}>FilDA APY</div>
-                            <div className={styles.value}>8.37%</div>
+                            <div className={styles.label}>{t('Common.APY')}</div>
+                            <div className={styles.value}>{parseFloat(market.savingsAPY).toFixed(2) + '%'}</div>
                         </div>
                         <div className={styles.item}>
-                            <div className={styles.label}>Interest APY</div>
-                            <div className={styles.value}>17.99%</div>
+                            <div className={styles.label}>{t('Common.MintAPY')}</div>
+                            <div className={styles.value}>{parseFloat(market.isLPToken ? market.lpTotalAPY : market.savingsMintAPY).toFixed(2) + '%'}</div>
                         </div>
                         <div className={styles.item}>
-                            <div className={styles.label}>Savings balance</div>
+                            <div className={styles.label}>{t('Common.SavingsBalance')}</div>
                             <div className={styles.valueContainer}>
-                                <div className={styles.value}>$2,573.87</div>
-                                <div className={styles.subValue}>0.75 ETH</div>
+                                <div className={styles.value}>{FetchData.getCurrencyFormatted(market.savingsBalanceFiat)}</div>
+                                <div className={styles.subValue}>{parseFloat(market.savingsBalanceFormatted).toFixed(4) + ' ' + market.symbol}</div>
                             </div>
                         </div>
                         <div className={styles.item}>
-                            <div className={styles.label}>Wallet balance</div>
+                            <div className={styles.label}>{t('Common.CollateralValue')}</div>
+                            <div className={styles.value}>{market.collateralStatus ? FetchData.getCurrencyFormatted(new BigNumber(market.savingsBalanceFiat).multipliedBy(new BigNumber(market.collateralFactor)).toString()) : '$0'}</div>
+                        </div>
+                        <div className={styles.item}>
+                            <div className={styles.label}>{t('Common.WalletBalance')}</div>
                             <div className={styles.valueContainer}>
-                                <div className={styles.value}>$15483.84</div>
-                                <div className={styles.subValue}>2.75 ETH</div>
+                                <div className={styles.value}>{FetchData.getCurrencyFormatted(market.walletBalanceFiat)}</div>
+                                <div className={styles.subValue}>{parseFloat(market.savingsBalanceFormatted).toFixed(4) + ' ' + market.symbol}</div>
                             </div>
                         </div>
                     </div>
@@ -112,7 +159,7 @@ function Accounts() {
                         <Button variant="secondary" className={styles.footerButton}>Deposit Swap</Button>
                     </div>
                 </div>
-            </Col>
+            </Col> : ''
         )
     })
 
@@ -124,47 +171,41 @@ function Accounts() {
             <Button variant="secondary" className={styles.depositButton} onClick={() => handleShow('markets')}><IoAddCircle /> Borrow asset</Button>
         </div>
 
-    const LoansAccounts = LoansAccountsList.map(account => {
+    const LoansAccounts = props.data.map((market, i) => {
         return(
-            <Col lg={3} md={4} sm={12} className={styles.accountCardContainer}>
+            market.loanBalance > 0 ?
+            <Col lg={3} md={4} sm={12} className={styles.accountCardContainer} key={i}>
                 <div  className={styles.accountCard}>
                     <div className={styles.header}>
                         <img
-                            src={EthereumLogo}
+                            src={market.logo}
                             width="auto"
                             height="24"
-                            alt="token logo"
+                            alt="Logo"
                         />
-                        <div className={styles.assetTitle}>{account}</div>
+                        <div className={styles.assetTitle}>{market.name}</div>
                     </div>
                     <div className={styles.content}>
                         <div className={styles.item}>
-                            <div className={styles.label}>FilDA APY</div>
-                            <div className={styles.value}>8.37%</div>
+                            <div className={styles.label}>{t('Common.APY')}</div>
+                            <div className={styles.value}>{parseFloat(market.loanAPY).toFixed(2) + '%'}</div>
                         </div>
                         <div className={styles.item}>
-                            <div className={styles.label}>Interest APY</div>
-                            <div className={styles.value}>17.99%</div>
+                            <div className={styles.label}>{t('Common.MintAPY')}</div>
+                            <div className={styles.value}>{parseFloat(market.loanMintAPY).toFixed(2) + '%'}</div>
                         </div>
                         <div className={styles.item}>
-                            <div className={styles.label}>Loan balance</div>
+                            <div className={styles.label}>{t('Common.LoanBalance')}</div>
                             <div className={styles.valueContainer}>
-                                <div className={styles.value}>$2,573.87</div>
-                                <div className={styles.subValue}>0.75 ETH</div>
+                                <div className={styles.value}>{'$' + parseFloat(market.loanBalanceFiat).toFixed(2)}</div>
+                                <div className={styles.subValue}>{parseFloat(market.loanBalanceFormatted).toFixed(4) + ' ' + market.symbol}</div>
                             </div>
                         </div>
                         <div className={styles.item}>
-                            <div className={styles.label}>Collateral value</div>
+                            <div className={styles.label}>{t('Common.WalletBalance')}</div>
                             <div className={styles.valueContainer}>
-                                <div className={styles.value}>$125.00</div>
-                                <div className={styles.subValue}>0.05 ETH</div>
-                            </div>
-                        </div>
-                        <div className={styles.item}>
-                            <div className={styles.label}>Wallet balance</div>
-                            <div className={styles.valueContainer}>
-                                <div className={styles.value}>$15483.84</div>
-                                <div className={styles.subValue}>2.75 ETH</div>
+                                <div className={styles.value}>{'$' + parseFloat(market.walletBalanceFiat).toFixed(2)}</div>
+                                <div className={styles.subValue}>{parseFloat(market.walletBalanceFormatted).toFixed(4) + ' ' + market.symbol}</div>
                             </div>
                         </div>
                     </div>
@@ -176,7 +217,7 @@ function Accounts() {
                         </div>
                     </div>
                 </div>
-            </Col>
+            </Col> : ''
         )
     })
 
@@ -190,15 +231,6 @@ function Accounts() {
                 </div>
             </Col>
 
-    const DepositAsset =  
-        <Col lg={3} md={4} sm={12} className={styles.accountCardContainer}>
-            <div className={styles.accountCard}>
-                <div className={styles.emptyMessage}>
-                    <IoAddCircle className={styles.icon} />
-                    <div className={styles.message} style={{ 'cursor': 'pointer' }} onClick={() => handleShow('markets')}>Deposit an asset</div>
-                </div>
-            </div>
-        </Col>
 
     return(
         <div className={styles.accounts}>
@@ -215,16 +247,22 @@ function Accounts() {
                     <Tab.Content>
                         <Tab.Pane className={styles.tabContent} eventKey="savings">
                             <Row>
-                                {/* {SavingsEmpty} */}
-                                {SavingsAccounts}
-                                {DepositAsset}
+                                {
+                                    loading ? AccountsLoading
+                                    : props.data.totalSavingsBalance > 0 ? SavingsAccounts
+                                    : SavingsEmpty
+                                }
+                                {props.data.totalSavingsBalance > 0 ? DepositAsset : ''}
                             </Row>
                         </Tab.Pane>
                         <Tab.Pane className={styles.tabContent} eventKey="loans">
                             <Row>
-                                {/* {LoansEmpty} */}
-                                {LoansAccounts}
-                                {BorrowAsset}
+                                {
+                                    loading ? AccountsLoading
+                                    : props.data.totalSavingsBalance > 0 ? LoansAccounts
+                                    : LoansEmpty
+                                }
+                                {props.data.totalLoanBalance > 0 ? BorrowAsset : ''}
                             </Row>
                         </Tab.Pane>
                     </Tab.Content>
@@ -233,12 +271,18 @@ function Accounts() {
             <MarketsModal 
                 show={showMarketsModal}
                 handleClose={() => handleClose('markets')}
-                toggleModal={(closeMode, showMode) => toggleModal(closeMode, showMode)}
+                toggleModal={(closeMode, showMode, marketData) => toggleModal(closeMode, showMode, marketData)}
+                data={props.data}
             />
             <DepositModal 
                 show={showDepositModal}
                 handleClose={() => handleClose('deposit')}
-                toggleModal={(closeMode, showMode) => toggleModal(closeMode, showMode)}
+                data={selectMarketData}
+            />
+            <BorrowModal 
+                show={showBorrowModal}
+                handleClose={() => handleClose('Borrow')}
+                data={selectMarketData}
             />
         </div>
     )

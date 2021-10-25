@@ -31,7 +31,7 @@
             flex-direction: column;
             justify-content: space-between;
             .content {
-                margin: 20px 30px 60px 30px;
+                margin: 30px;
                 .title {
                     font-size: $Medium;
                     font-weight: 600;
@@ -62,20 +62,54 @@
                     align-items: center;
                     color: $Secondary;
                     font-size: $xLarge;
+                    grid-gap: 10px;
                     .text {
-                        margin-left: 10px;
                         color: $Black;
                         font-size: $Large;
                         font-weight: 200;
+                        margin-right: 10px;
                     }
+                    a {
+                        font-size: $xSmall;
+                        color: $Primary;
+                        text-decoration: none;
+                    }
+                }
+                .txnError {
+                    color: $Red;
+                    margin-top: 20px;
                 }
             }
             .footer {
                 display: flex;
                 flex-direction: row;
-                justify-content: flex-end;
+                justify-content: space-between;
                 align-items: center;
                 grid-gap: 10px;
+                padding: 30px;
+                .walletInfo {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    grid-gap: 10px;
+                    .label {
+                        font-size: $xSmall;
+                        color: $DarkGrey;
+                    }
+                    .value {
+                        font-size: $xSmall;
+                        color: $Black;
+                        font-weight: 600;
+                    }
+                }
+                .buttonsContainer {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    align-items: center;
+                    grid-gap: 10px;
+                }
             }
         }
     }
