@@ -8,7 +8,7 @@ import detectEthereumProvider from '@metamask/detect-provider'
 import Config from './utils/config'
 import { useTranslation } from 'react-i18next'
 import logo from './images/logo.svg';
-import './App.scss';
+import styles from './App.scss';
 import Header from './components/Header'
 import Footer from './components/Footer';
 import Banking from './Banking';
@@ -248,7 +248,7 @@ function App() {
                         <BrowserRouter>
                             <Header />
                             <div style={{ 'color': 'white' }}>{debug}</div>
-                            <Switch className="appContent">
+                            <Switch>
                                 <Route exact path="/">
                                     <Banking />
                                 </Route>

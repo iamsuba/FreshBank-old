@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Container, Button, Modal, Form, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
-import styles from './DepositModal.module.scss'
+import styles from './TxnModal.module.scss'
 import { FaCheckCircle } from 'react-icons/fa'
 import CoreMethod from '../../methods/CoreMethod'
 import { useTranslation } from 'react-i18next'
@@ -260,7 +260,7 @@ function DepositModal(props) {
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     <Button variant="secondary" onClick={() => handleApprove(true)}>{t('Common.Approve')}</Button>
-                    <Button variant="outline-black" onClick={() => props.handleClose('deposit')}>Cancel</Button>
+                    <Button variant="outline-black" onClick={() => handleClose}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div>
@@ -275,7 +275,7 @@ function DepositModal(props) {
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     <Button variant="secondary" onClick={() => handleApprove(false)}>{t('Common.FurtherApprove')}</Button>
-                    <Button variant="outline-black" onClick={() => props.handleClose('deposit')}>Cancel</Button>
+                    <Button variant="outline-black" onClick={() => handleClose}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div>
@@ -287,7 +287,6 @@ function DepositModal(props) {
                 <div className={styles.description}>Please approve the transaction from your wallet provider</div>
             </div>
             <div className={styles.footer}>
-                {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     <img
                         src={LoadingIcon}
@@ -332,7 +331,7 @@ function DepositModal(props) {
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     {DepositButton}
-                    <Button variant="outline-black" onClick={() => handleClose('deposit')}>Cancel</Button>
+                    <Button variant="outline-black" onClick={() => handleClose}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div>
@@ -349,7 +348,7 @@ function DepositModal(props) {
             <div className={styles.footer}>
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
-                    <Button variant="secondary" onClick={() => handleClose('deposit')}>Close</Button>
+                    <Button variant="secondary" onClick={() => handleClose('deposit')}>{t('Common.Close')}</Button>
                 </div>
             </div>
         </div>
@@ -366,7 +365,7 @@ function DepositModal(props) {
             <div className={styles.footer}>
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
-                    <Button variant="secondary" onClick={() => handleClose('deposit')}>Close</Button>
+                    <Button variant="secondary" onClick={() => handleClose('deposit')}>{t('Common.Close')}</Button>
                 </div>
             </div>
         </div>
@@ -378,11 +377,11 @@ function DepositModal(props) {
     return (
         <Modal
             show={props.show}
-            onHide={props.handleClose}
+            onHide={handleClose}
             aria-labelledby="example-custom-modal-styling-title"
-            dialogClassName={styles.depositModal}
+            dialogClassName={styles.txnModal}
             animation={true}>
-            <Container className={styles.depositModalContainer}>
+            <Container className={styles.txnModalContainer}>
                 <div className={styles.titleContainer}>
                     <div className={styles.title}>
                         <img

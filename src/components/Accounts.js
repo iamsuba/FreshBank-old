@@ -7,6 +7,8 @@ import { IoInformationCircleSharp } from 'react-icons/io5'
 import MarketsModal from './Modals/MarketsModal'
 import DepositModal from './Modals/DepositModal'
 import BorrowModal from './Modals/BorrowModal'
+import RepayModal from './Modals/RepayModal'
+import WithdrawModal from './Modals/WithdrawModal'
 import { useTranslation } from 'react-i18next'
 import ContentLoader from 'react-content-loader'
 import FetchData from '../methods/FetchData'
@@ -16,8 +18,11 @@ import log from '../utils/logger'
 import { NetworkTypeContext, WalletAddressContext, Web3Context } from '../context'
 import BigNumber from 'bignumber.js'
 import Variables from '../variables.scss'
+import SwapRepayModal from './Modals/SwapRepayModal'
 
 function Accounts(props) {
+
+    console.log("Accounts page", props)
 
     const { connectedAddress } = useContext(WalletAddressContext)
     const { networkType } = useContext(NetworkTypeContext)
@@ -27,6 +32,9 @@ function Accounts(props) {
     const [showMarketsModal, setShowMarketsModal] = useState(false)
     const [showDepositModal, setShowDepositModal] = useState(false)
     const [showBorrowModal, setShowBorrowModal] = useState(false)
+    const [showRepayModal, setShowRepayModal] = useState(false)
+    const [showWithdrawModal, setShowWithdrawModal] = useState(false)
+    const [showSwapRepayModal, setShowSwapRepayModal] = useState(false)
 
     let loading = props.data.loading === undefined ? true
                 : connectedAddress === undefined ? true
@@ -40,6 +48,18 @@ function Accounts(props) {
           case 'deposit':
             setShowDepositModal(false)
             break;
+        case 'borrow':
+            setShowBorrowModal(false)
+            break;
+        case 'repay':
+            setShowRepayModal(false)
+            break;
+        case 'withdraw':
+            setShowWithdrawModal(false)
+            break;
+        case 'swapRepay':
+            setShowSwapRepayModal(false)
+            break;
         }
       }
 
@@ -51,6 +71,18 @@ function Accounts(props) {
           case 'deposit':
             setShowDepositModal(true)
             break;
+        case 'borrow':
+            setShowBorrowModal(true)
+            break;
+        case 'repay':
+            setShowRepayModal(true)
+            break;
+        case 'withdraw':
+            setShowWithdrawModal(true)
+            break;
+        case 'swapRepay':
+            setShowSwapRepayModal(true)
+            break;
         }
       }
 
@@ -58,6 +90,21 @@ function Accounts(props) {
         setSelectMarketData(marketData)
         handleClose(closeMode)
         handleShow(showMode)
+    }
+
+    const handleRepay = (marketIndex) => {
+        setSelectMarketData(props.data[marketIndex])
+        handleShow('repay')
+    }
+
+    const handleSwapRepay = (marketIndex) => {
+        setSelectMarketData(props.data[marketIndex])
+        handleShow('swapRepay')
+    }
+
+    const handleWithdraw = (marketIndex) => {
+        setSelectMarketData(props.data[marketIndex])
+        handleShow('withdraw')
     }
 
     const { t } = useTranslation()
@@ -155,7 +202,7 @@ function Accounts(props) {
                         </div>
                     </div>
                     <div className={styles.footer}>
-                        <Button variant="primary" className={styles.footerButton}>Withdraw</Button>
+                        <Button variant="primary" className={styles.footerButton} onClick={() => handleWithdraw(i)}>{t('Common.Withdraw')}</Button>
                         <Button variant="secondary" className={styles.footerButton}>Deposit Swap</Button>
                     </div>
                 </div>
@@ -210,10 +257,10 @@ function Accounts(props) {
                         </div>
                     </div>
                     <div className={styles.loansFooter}>
-                        <Button variant="primary" className={styles.footerButton}>Repay</Button>
+                        <Button variant="primary" className={styles.footerButton} onClick={() => handleRepay(i)}>Repay</Button>
                         <div className={styles.footer}>
                             <Button variant="secondary" className={styles.footerButton}>Deposit Repay</Button>
-                            <Button variant="secondary" className={styles.footerButton}>Swap Repay</Button>
+                            <Button variant="secondary" className={styles.footerButton} onClick={() => handleSwapRepay(i)}>{t('Common.SwapRepay')}</Button>
                         </div>
                     </div>
                 </div>
@@ -281,9 +328,32 @@ function Accounts(props) {
             />
             <BorrowModal 
                 show={showBorrowModal}
-                handleClose={() => handleClose('Borrow')}
+                handleClose={() => handleClose('borrow')}
+                data={selectMarketData}
+                accountLiquidityInFiat={props.data.accountLiquidityInFiat}
+                totalBorrowLimitFiat={props.data.totalBorrowLimitFiat}
+                totalLoanBalance={props.data.totalLoanBalance}
+            />
+            <RepayModal
+                show={showRepayModal}
+                handleClose={() => handleClose('repay')}
                 data={selectMarketData}
             />
+            <WithdrawModal
+                show={showWithdrawModal}
+                handleClose={() => handleClose('withdraw')}
+                data={selectMarketData}
+                totalBorrowLimitFiat={props.data.totalBorrowLimitFiat}
+                totalLoanBalance={props.data.totalLoanBalance}
+                accountLiquidityInFiat={props.data.accountLiquidityInFiat}
+                totalSavingsBalance={props.data.totalSavingsBalance}
+            />
+            {/* <SwapRepayModal 
+                show={showSwapRepayModal}
+                handleClose={() => handleClose('swapRepay')}
+                data={selectMarketData}
+                allData={props.data}
+            /> */}
         </div>
     )
 }

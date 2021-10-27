@@ -1,8 +1,8 @@
 @import "../../variables.scss";
 
-.depositModal {
+.txnModal {
     background-color: radial-gradient(140.14% 84.18% at 37.5% 19.23%, #E0E7F2 0%, #F4F7FC 59.38%);
-    .depositModalContainer {
+    .txnModalContainer {
         padding: 40px 0px;
         .titleContainer {
             display: flex;
@@ -31,7 +31,7 @@
             flex-direction: column;
             justify-content: space-between;
             .content {
-                margin: 20px 30px 60px 30px;
+                margin: 30px;
                 .title {
                     font-size: $Medium;
                     font-weight: 600;
@@ -39,12 +39,30 @@
                 .description {
                     font-size: $Small;
                     font-weight: 200;
+                    .value {
+                        font-weight: 600;
+                        margin-left: 10px;
+                    }
+                    .subValue {
+                        font-weight: 300;
+                        font-size: $xSmall;
+                    }
+                }
+                .checkTips {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    grid-gap: 10px;
+                    align-items: flex-start;
+                    margin-top: 10px;
+                    color: $Primary;
+                    font-size: $Small;
                 }
                 .inputContainer {
                     display: flex;
                     flex-direction: row;
                     justify-content: flex-start;
-                    align-items: center;
+                    align-items: flex-end;
                     grid-gap: 10px;
                     margin-top: 20px;
                     .txnValue {
@@ -62,20 +80,57 @@
                     align-items: center;
                     color: $Secondary;
                     font-size: $xLarge;
+                    grid-gap: 10px;
                     .text {
-                        margin-left: 10px;
                         color: $Black;
                         font-size: $Large;
                         font-weight: 200;
+                        margin-right: 10px;
                     }
+                    a {
+                        font-size: $xSmall;
+                        color: $Primary;
+                        text-decoration: none;
+                    }
+                }
+                .subText {
+                    padding: 10px;
+                }
+                .txnError {
+                    color: $Red;
+                    margin-top: 20px;
                 }
             }
             .footer {
                 display: flex;
                 flex-direction: row;
-                justify-content: flex-end;
+                justify-content: space-between;
                 align-items: center;
                 grid-gap: 10px;
+                padding: 30px;
+                .walletInfo {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    grid-gap: 10px;
+                    .label {
+                        font-size: $xSmall;
+                        color: $DarkGrey;
+                    }
+                    .value {
+                        font-size: $xSmall;
+                        color: $Black;
+                        font-weight: 600;
+                    }
+                }
+                .buttonsContainer {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-end;
+                    align-items: center;
+                    grid-gap: 10px;
+                }
             }
         }
     }

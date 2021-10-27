@@ -33,7 +33,6 @@ function Footer() {
                             <a href="" target="_blank">Protocol</a>
                         </div>
                     </Col>
-
                     <Col md={4} sm={12} className={styles.footerCenter}>
                         <FaTwitter className={styles.socialIcon} />
                         <FaTelegram className={styles.socialIcon} />

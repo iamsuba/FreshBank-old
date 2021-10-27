@@ -12,6 +12,7 @@ $theme-colors: (
 
 body {
     background-color: $BgGradient;
+    min-height: 100vh;
 }
 
 //Button components
@@ -61,4 +62,9 @@ body {
     bottom: 0;
     position: fixed;
     width: 100%;
+}
+
+.modal-dialog-scrollable .modal-content {
+    max-height: 100%;
+    overflow: scroll;
 }

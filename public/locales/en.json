@@ -132,6 +132,8 @@
   "BorrowModal.LoanPercentageUsed": "Loan Percentage Used",
   "BorrowModal.Info": "Borrowing close to 100% will risk your collateral at instant liquidation. Its always safe to borrow upto 85% of your borrow limit.",
   "BorrowModal.BorrowCheckTips": "There is a risk of liquidation, please confirm whether you want to open the loan service",
+  "BorrowModal.InProgress": "Transaction in progress",
+  "BorrowModal.CheckYourWallet": "Check your wallet provider",
   "DepositModal.InsufficientBalance": "Insufficient Balance",
   "DepositModal.CheckYourWallet": "Check your wallet provider",
   "DepositModal.DepositToSavingsAccount": "Deposit to Savings Account",
