@@ -172,8 +172,7 @@ function MarketsModal(props) {
             onHide={props.handleClose}
             aria-labelledby="example-custom-modal-styling-title"
             dialogClassName={styles.markets}
-            animation={true}
-            scrollable={true}>
+            animation={true}>
             <Container className={styles.marketsContainer}>
                 <div className={styles.titleContainer}>
                     <div className={styles.title}>Markets</div>

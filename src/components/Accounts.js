@@ -9,6 +9,7 @@ import DepositModal from './Modals/DepositModal'
 import BorrowModal from './Modals/BorrowModal'
 import RepayModal from './Modals/RepayModal'
 import WithdrawModal from './Modals/WithdrawModal'
+import DepositSwapModal from './Modals/DepositSwapModal'
 import { useTranslation } from 'react-i18next'
 import ContentLoader from 'react-content-loader'
 import FetchData from '../methods/FetchData'
@@ -22,8 +23,6 @@ import SwapRepayModal from './Modals/SwapRepayModal'
 
 function Accounts(props) {
 
-    console.log("Accounts page", props)
-
     const { connectedAddress } = useContext(WalletAddressContext)
     const { networkType } = useContext(NetworkTypeContext)
     const { web3 } = useContext(Web3Context)
@@ -35,12 +34,14 @@ function Accounts(props) {
     const [showRepayModal, setShowRepayModal] = useState(false)
     const [showWithdrawModal, setShowWithdrawModal] = useState(false)
     const [showSwapRepayModal, setShowSwapRepayModal] = useState(false)
+    const [showDepositSwapModal, setShowDepositSwapModal] = useState(false)
 
     let loading = props.data.loading === undefined ? true
                 : connectedAddress === undefined ? true
                 : props.data.loading
 
     const handleClose = (mode) => {
+        console.log("closing", mode)
         switch(mode) {
           case 'markets':
             setShowMarketsModal(false)
@@ -59,6 +60,9 @@ function Accounts(props) {
             break;
         case 'swapRepay':
             setShowSwapRepayModal(false)
+            break;
+        case 'depositSwap':
+            setShowDepositSwapModal(false)
             break;
         }
       }
@@ -83,6 +87,9 @@ function Accounts(props) {
         case 'swapRepay':
             setShowSwapRepayModal(true)
             break;
+        case 'depositSwap':
+            setShowDepositSwapModal(true)
+            break;
         }
       }
 
@@ -105,6 +112,11 @@ function Accounts(props) {
     const handleWithdraw = (marketIndex) => {
         setSelectMarketData(props.data[marketIndex])
         handleShow('withdraw')
+    }
+
+    const handleDepositSwap = (marketIndex) => {
+        setSelectMarketData(props.data[marketIndex])
+        handleShow('depositSwap')
     }
 
     const { t } = useTranslation()
@@ -203,7 +215,7 @@ function Accounts(props) {
                     </div>
                     <div className={styles.footer}>
                         <Button variant="primary" className={styles.footerButton} onClick={() => handleWithdraw(i)}>{t('Common.Withdraw')}</Button>
-                        <Button variant="secondary" className={styles.footerButton}>Deposit Swap</Button>
+                        <Button variant="secondary" className={styles.footerButton} onClick={() => handleDepositSwap(i)}>{t('Common.DepositSwap')}</Button>
                     </div>
                 </div>
             </Col> : ''
@@ -348,11 +360,18 @@ function Accounts(props) {
                 accountLiquidityInFiat={props.data.accountLiquidityInFiat}
                 totalSavingsBalance={props.data.totalSavingsBalance}
             />
+
             {/* <SwapRepayModal 
                 show={showSwapRepayModal}
                 handleClose={() => handleClose('swapRepay')}
                 data={selectMarketData}
+                allData={props.data} /> */}
+
+            {/* <DepositSwapModal
+                data={selectMarketData}
                 allData={props.data}
+                show={showDepositSwapModal}
+                handleClose={() => handleClose("depositSwap")}
             /> */}
         </div>
     )

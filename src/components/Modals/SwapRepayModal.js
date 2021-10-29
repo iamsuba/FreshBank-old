@@ -19,7 +19,7 @@ import styles from './TxnModal.module.scss'
 
 function SwapRepayModal(props) {
 
-    console.log(props)
+    console.log("from swapRepay", props.data)
 
     const { connectedAddress } = useContext(WalletAddressContext)
     const { networkType } = useContext(NetworkTypeContext)
@@ -29,7 +29,7 @@ function SwapRepayModal(props) {
 
     const [swapValue, setSwapValue] = useState('')
     const [repayValue, setRepayValue] = useState('')
-    const [swapAsset, setSwapAsset] = useState()
+    const [swapAsset, setSwapAsset] = useState(props.data[0])
     const [swapData, setSwapData] = useState([])
     const [swapPath, setSwapPath] = useState([])
     const [showAssetSelect, setShowAssetSelect] = useState(false)

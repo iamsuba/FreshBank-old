@@ -51,6 +51,7 @@ function DepositModal(props) {
     }
 
     const handleClose = async () => {
+        console.log("closing")
         setInputValue('')
         setLowBalance(false)
         setNegativeNum(false)
@@ -260,7 +261,7 @@ function DepositModal(props) {
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     <Button variant="secondary" onClick={() => handleApprove(true)}>{t('Common.Approve')}</Button>
-                    <Button variant="outline-black" onClick={() => handleClose}>{t('Common.Cancel')}</Button>
+                    <Button variant="outline-black" onClick={() => handleClose()}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div>
@@ -275,7 +276,7 @@ function DepositModal(props) {
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     <Button variant="secondary" onClick={() => handleApprove(false)}>{t('Common.FurtherApprove')}</Button>
-                    <Button variant="outline-black" onClick={() => handleClose}>{t('Common.Cancel')}</Button>
+                    <Button variant="outline-black" onClick={() => handleClose()}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div>
@@ -331,7 +332,7 @@ function DepositModal(props) {
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     {DepositButton}
-                    <Button variant="outline-black" onClick={() => handleClose}>{t('Common.Cancel')}</Button>
+                    <Button variant="outline-black" onClick={() => handleClose()}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div>
@@ -348,7 +349,7 @@ function DepositModal(props) {
             <div className={styles.footer}>
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
-                    <Button variant="secondary" onClick={() => handleClose('deposit')}>{t('Common.Close')}</Button>
+                    <Button variant="secondary" onClick={() => handleClose()}>{t('Common.Close')}</Button>
                 </div>
             </div>
         </div>
@@ -365,7 +366,7 @@ function DepositModal(props) {
             <div className={styles.footer}>
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
-                    <Button variant="secondary" onClick={() => handleClose('deposit')}>{t('Common.Close')}</Button>
+                    <Button variant="secondary" onClick={() => handleClose()}>{t('Common.Close')}</Button>
                 </div>
             </div>
         </div>

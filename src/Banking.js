@@ -279,14 +279,8 @@ function Banking() {
       <BrowserRouter>
         {/* <Disconnected /> */}
         <Dashboard data={data} />
-        {
-            data.length > 0 ? (
-                <div>
-                    <Accounts data={data} />
-                    <Pending data={data} />
-                </div>
-            ) : ''
-        }
+        <Accounts data={data} />
+        <Pending data={data} />
       </BrowserRouter>
     </div>
   );
