@@ -12,6 +12,7 @@ import styles from './App.scss';
 import Header from './components/Header'
 import Footer from './components/Footer';
 import Banking from './Banking';
+import Disconnected from './components/Disconnected';
 
 function App() {
 
@@ -238,6 +239,10 @@ function App() {
       return hecoMainNetWeb3;
   }
 
+  const RenderBanking = 
+    !connectedAddress || connectedAddress === '0x0000000000000000000000000000000000000000' ? <Disconnected /> : <Banking />
+  
+
   return (
 
     <Web3Context.Provider value={{ web3, readonlyWeb3, hecoMainNetWeb3: getHecoMainNetWeb3() }}>
@@ -250,7 +255,7 @@ function App() {
                             <div style={{ 'color': 'white' }}>{debug}</div>
                             <Switch>
                                 <Route exact path="/">
-                                    <Banking />
+                                    {RenderBanking}
                                 </Route>
                                 {/* <Route exact path="/staking">
                                     <Staking />

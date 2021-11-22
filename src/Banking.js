@@ -277,7 +277,6 @@ function Banking() {
   return (
     <div className="Banking">
       <BrowserRouter>
-        {/* <Disconnected /> */}
         <Dashboard data={data} />
         <Accounts data={data} />
         <Pending data={data} />
