@@ -233,7 +233,7 @@ function WithdrawModal(props) {
                 <div className={styles.buttonsContainer}>
                     <Button variant="primary" onClick={() => handleWithdraw(true)}>{t('WithdrawModal.WithdrawSafeMax')}</Button>
                     <Button variant="secondary" onClick={() => setWithdrawSafeMax(false)}>{t('WithdrawModal.WithdrawCustomAmount')}</Button>
-                    <Button variant="outline-black" onClick={() => handleClose('deposit')}>{t('Common.Cancel')}</Button>
+                    <Button variant="outline-black" onClick={() => handleClose()}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div> : 
@@ -275,7 +275,7 @@ function WithdrawModal(props) {
                 {LoanPercentageUsed}
                 <div className={styles.buttonsContainer}>
                     {WithdrawButton}
-                    <Button variant="outline-black" onClick={() => handleClose}>{t('Common.Cancel')}</Button>
+                    <Button variant="outline-black" onClick={() => handleClose()}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div>
@@ -292,7 +292,7 @@ function WithdrawModal(props) {
             <div className={styles.footer}>
             {LoanPercentageUsed}
                 <div className={styles.buttonsContainer}>
-                    <Button variant="secondary" onClick={() => handleClose('deposit')}>{t('Common.Close')}</Button>
+                    <Button variant="secondary" onClick={() => handleClose()}>{t('Common.Close')}</Button>
                 </div>
             </div>
         </div>
@@ -309,7 +309,7 @@ function WithdrawModal(props) {
             <div className={styles.footer}>
                 {LoanPercentageUsed}
                 <div className={styles.buttonsContainer}>
-                    <Button variant="secondary" onClick={() => handleClose('deposit')}>{t('Common.Close')}</Button>
+                    <Button variant="secondary" onClick={() => handleClose()}>{t('Common.Close')}</Button>
                 </div>
             </div>
         </div>
@@ -319,7 +319,7 @@ function WithdrawModal(props) {
     return (
         <Modal
             show={props.show}
-            onHide={handleClose}
+            onHide={() => handleClose()}
             aria-labelledby="example-custom-modal-styling-title"
             dialogClassName={styles.txnModal}
             animation={true}>

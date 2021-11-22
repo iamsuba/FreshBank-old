@@ -271,7 +271,7 @@ function RepayModal(props) {
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     <Button variant="secondary" onClick={() => handleApprove(true)}>{t('Common.Approve')}</Button>
-                    <Button variant="outline-black" onClick={() => handleClose}>Cancel</Button>
+                    <Button variant="outline-black" onClick={() => handleClose()}>Cancel</Button>
                 </div>
             </div>
         </div>
@@ -286,7 +286,7 @@ function RepayModal(props) {
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     <Button variant="secondary" onClick={() => handleApprove(false)}>{t('Common.FurtherApprove')}</Button>
-                    <Button variant="outline-black" onClick={() => handleClose}>Cancel</Button>
+                    <Button variant="outline-black" onClick={() => handleClose()}>Cancel</Button>
                 </div>
             </div>
         </div>
@@ -320,7 +320,7 @@ function RepayModal(props) {
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
                     {RepayButton}
-                    <Button variant="outline-black" onClick={() => handleClose('deposit')}>Cancel</Button>
+                    <Button variant="outline-black" onClick={() => handleClose()}>Cancel</Button>
                 </div>
             </div>
         </div>
@@ -337,7 +337,7 @@ function RepayModal(props) {
             <div className={styles.footer}>
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
-                    <Button variant="secondary" onClick={() => handleClose('deposit')}>{t('Common.Close')}</Button>
+                    <Button variant="secondary" onClick={() => handleClose()}>{t('Common.Close')}</Button>
                 </div>
             </div>
         </div>
@@ -354,7 +354,7 @@ function RepayModal(props) {
             <div className={styles.footer}>
                 {WalletBalanceInfo}
                 <div className={styles.buttonsContainer}>
-                    <Button variant="secondary" onClick={() => handleClose('deposit')}>{t('Common.Close')}</Button>
+                    <Button variant="secondary" onClick={() => handleClose()}>{t('Common.Close')}</Button>
                 </div>
             </div>
         </div>
@@ -366,7 +366,7 @@ function RepayModal(props) {
     return (
         <Modal
             show={props.show}
-            onHide={handleClose}
+            onHide={() => handleClose()}
             aria-labelledby="example-custom-modal-styling-title"
             dialogClassName={styles.txnModal}
             animation={true}>
