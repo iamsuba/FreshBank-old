@@ -29,7 +29,7 @@ function SwapRepayModal(props) {
 
     const [swapValue, setSwapValue] = useState('')
     const [repayValue, setRepayValue] = useState('')
-    const [swapAsset, setSwapAsset] = useState(props.data[0])
+    const [swapAsset, setSwapAsset] = useState()
     const [swapData, setSwapData] = useState([])
     const [swapPath, setSwapPath] = useState([])
     const [showAssetSelect, setShowAssetSelect] = useState(false)
@@ -451,7 +451,8 @@ function SwapRepayModal(props) {
         <div className={styles.walletInfo}>
             <div className={styles.label}>{t('Common.WalletBalance')}</div>
             <div className={styles.value}>
-                {parseFloat(swapAsset.walletBalanceFormatted).toFixed(6) + ' ' + swapAsset.symbol}
+                {/* TODO: swapAsset.walletBalanceFormatted and swapAsset.symbol throws error */}
+                {/* {parseFloat(swapAsset.walletBalanceFormatted).toFixed(6) + ' ' + swapAsset.symbol} */}
             </div>
         </div>
 
@@ -482,7 +483,9 @@ function SwapRepayModal(props) {
                 <div className={styles.description}>
                     {t('SwapRepayModal.RepayConfirmMsg',
                         {
-                            swapValue: `${numberFromString(swapValue).toFixed(6)} ${swapAsset.symbol} `,
+                            //TODO: swapAsset.symbol throws error
+                            // swapValue: `${numberFromString(swapValue).toFixed(6)} ${swapAsset.symbol} `,
+                            swapValue: `${numberFromString(swapValue).toFixed(6)}`,
                             repayValue: `${numberFromString(repayValue).toFixed(6)} ${props.data.symbol} `
                         }
                     )}
@@ -570,7 +573,9 @@ function SwapRepayModal(props) {
                     <Form.Control
                         className={styles.txnValue}
                         type="number"
-                        placeholder={"0.00 " + swapAsset.symbol}
+                        //TODO: swapAsset.symbol throws error
+                        // placeholder={"0.00 " + swapAsset.symbol}
+                        placeholder={"0.00 "}
                         autoComplete="off"
                         value={swapValue}
                         min="0"

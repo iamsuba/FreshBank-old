@@ -76,7 +76,7 @@
   "Common.SwapRepayAssets1": "{{walletSymbol}}(wallet) ==> {{curSymbol}}(loan)",
   "Common.DepositRepayAssets": "Deposit to Repay Assets",
   "Common.DepositRepayAssets1": "{{savingSymbol}}(deposit) ==> {{curSymbol}}(loan)",
-  "Common.DepositRepayAssetsLimitTips": "Single transaction limit ${{limitValue}}",
+  "Common.DepositRepayAssetsLimitTips": "Single transaction limit",
   "Common.DepositSwapAssets": "Exchange {{curSymbol}} for {{swapSymbol}}",
   "Common.DepositSwapAssets1": "{{curSymbol}}(deposit) ==> {{swapSymbol}}(deposit)",
   "Common.WithdrawAssets": "Withdraw Assets",

@@ -777,7 +777,7 @@ function DepositSwapModal(props) {
             <div className={styles.content}>
                 <div className={styles.title}>{t('Common.DepositSwapAssets', { curSymbol: props?.data?.symbol, swapSymbol: swapAsset?.symbol })}</div>
                 <div className={styles.description}>{t('DepositSwapModal.InfoText')}</div>
-                <div className={styles.description}>{t('Common.DepositRepayAssetsLimitTips', { limitValue: formatBigNumber(getTransactionLimit()) })}</div>
+                <div className={styles.description}>{t('Common.DepositRepayAssetsLimitTips')} <span className={styles.value}>${formatBigNumber(getTransactionLimit())}</span></div>
                 <div className={styles.description}>{`${props?.data?.symbol} ${t('Common.SavingsBalance')}`} <span className={styles.value}>{`${props?.data?.savingsBalanceFormatted} ${props?.data?.symbol}`}</span></div>
                 <div className={styles.description}>{t('Common.EstExchange')} <span className={styles.value}>{`${numberFromString(repayValue)} ${swapAsset?.symbol} `}</span></div>
                 <div className={styles.description}>{t('Common.MaximumSlippage')} <span className={styles.value}>2%</span></div>
@@ -789,7 +789,7 @@ function DepositSwapModal(props) {
                 }
                 <div className={styles.description}>{t('BorrowModal.LoanPercentageUsed')} <span className={styles.value}>{percent} %</span></div>
                 <Form >
-                    <Form.Group controlId="formSwapValue">
+                    <Form.Group controlId="formSwapValue" className={styles.inputContainer}>
                         <Form.Control
                             className={styles.txnValue}
                             type="number"
@@ -797,6 +797,7 @@ function DepositSwapModal(props) {
                             autoComplete="off"
                             value={swapValue}
                             min="0"
+                            width="200px"
                             onChange={e => onSwapValueUpdate(e.target.value)} />
                         <Button variant="outline-darkgrey" onClick={() => setMaximum()}>{t('Common.Maximum')}</Button>
                     </Form.Group>
@@ -860,13 +861,14 @@ function DepositSwapModal(props) {
         <div className={styles.contentContainer}>
             <div className={styles.content}>
                 <div className={styles.message}>
-                    <div className={styles.text}>{t('DepositSwapModal.CollateralApprovalMsg', { symbol: swapAsset.symbol })}</div>
+                    {/* TODO */}
+                    {/* <div className={styles.text}>{t('DepositSwapModal.CollateralApprovalMsg', { symbol: swapAsset.symbol })}</div> */}
                 </div>
             </div>
             <div className={styles.footer}>
                 <div className={styles.buttonsContainer}>
                     <Button variant="secondary" onClick={() => handleCollateral()}>{t('Common.Approve')}</Button>
-                    <Button variant="outline-black" onClick={handleClose}>{t('Common.Cancel')}</Button>
+                    <Button variant="outline-black" onClick={() => handleClose()}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div>
@@ -880,7 +882,7 @@ function DepositSwapModal(props) {
             </div>
             <div className={styles.footer}>
                 <div className={styles.buttonsContainer}>
-                    <Button variant="secondary" onClick={handleClose}>{t('Common.Cancel')}</Button>
+                    <Button variant="secondary" onClick={() => handleClose()}>{t('Common.Cancel')}</Button>
                 </div>
             </div>
         </div>
@@ -918,14 +920,14 @@ function DepositSwapModal(props) {
         </div>
 
     const needsApproval = props.data && !(props.data.depositSwapApproved) && firstApproval
-    const RepayForm = confirmDeviation ? ConfirmDeviation() : collateralModal ? CollateralRequest() : RepayCustom()
-    const Loaded = !swapAsset ? NoSwapList : needsApproval ? ApproveRequest() : RepayForm
-    const Rendered = loading ? LoadingMessage() : needsFurtherApproval ? ApproveFurtherRequest() : Loaded()
+    const RepayForm = confirmDeviation ? ConfirmDeviation : collateralModal ? CollateralRequest : RepayCustom
+    const Loaded = !swapAsset ? NoSwapList : needsApproval ? ApproveRequest : RepayForm
+    const Rendered = loading ? LoadingMessage : needsFurtherApproval ? ApproveFurtherRequest : Loaded
 
     return (
         <Modal
             show={props.show}
-            onHide={handleClose}
+            onHide={() => handleClose()}
             aria-labelledby="example-custom-modal-styling-title"
             dialogClassName={styles.txnModal}
             animation={true}>

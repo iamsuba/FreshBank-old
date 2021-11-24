@@ -70,7 +70,7 @@ function Pending(props) {
                     className="d-inline-block align-top"
                     alt="loading"
                     />
-                <div className={styles.text}>Deposit in progress</div>
+                <div className={styles.text}>{t('Pending.WithdrawInProgress')}</div>
                 </Col>
                 <Col md={4} className={styles.actionContainer}>
                     <FaExternalLinkAlt className={styles.icon} />
@@ -82,11 +82,116 @@ function Pending(props) {
         )
     })
 
+    const PendingBorrow = props.data.map((market, i) => {
+        return (
+            market.borrowTxnHash == null ? '' : 
+            <Row className={styles.pendingItemRow} key={market.symbol}>
+                <Col md={3} className={styles.nameContainer}>
+                <img
+                    src={market.logo}
+                    width="auto"
+                    height="18"
+                    className="d-inline-block align-top"
+                    alt="Logo"
+                    />
+                <div className={styles.text}>{market.name}</div>
+                </Col>
+                <Col md={5} className={styles.loadingContainer}>
+                <img
+                    src={LoadingIcon}
+                    width="auto"
+                    height="18"
+                    className="d-inline-block align-top"
+                    alt="loading"
+                    />
+                <div className={styles.text}>{t('Pending.BorrowInProgress')}</div>
+                </Col>
+                <Col md={4} className={styles.actionContainer}>
+                    <FaExternalLinkAlt className={styles.icon} />
+                    <a className={styles.text} href={CoreData.getExplorerUrl(market.borrowTxnHash, networkType)} target="_blank">
+                        {t('Pending.ViewTransaction')}
+                    </a>
+                </Col>
+            </Row>
+        )
+    })
+
+    const PendingRepay = props.data.map((market, i) => {
+        return (
+            market.repayTxnHash == null ? '' : 
+            <Row className={styles.pendingItemRow} key={market.symbol}>
+                <Col md={3} className={styles.nameContainer}>
+                <img
+                    src={market.logo}
+                    width="auto"
+                    height="18"
+                    className="d-inline-block align-top"
+                    alt="Logo"
+                    />
+                <div className={styles.text}>{market.name}</div>
+                </Col>
+                <Col md={5} className={styles.loadingContainer}>
+                <img
+                    src={LoadingIcon}
+                    width="auto"
+                    height="18"
+                    className="d-inline-block align-top"
+                    alt="loading"
+                    />
+                <div className={styles.text}>{t('Pending.RepayInProgress')}</div>
+                </Col>
+                <Col md={4} className={styles.actionContainer}>
+                    <FaExternalLinkAlt className={styles.icon} />
+                    <a className={styles.text} href={CoreData.getExplorerUrl(market.repayTxnHash, networkType)} target="_blank">
+                        {t('Pending.ViewTransaction')}
+                    </a>
+                </Col>
+            </Row>
+        )
+    })
+
+    const PendingLPRewards = props.data.map((market, i) => {
+        return (
+            market.isLPToken && market.lpRewardTxnHash && 
+            <Row className={styles.pendingItemRow} key={market.symbol}>
+                <Col md={3} className={styles.nameContainer}>
+                <img
+                    src={market.logo}
+                    width="auto"
+                    height="18"
+                    className="d-inline-block align-top"
+                    alt="Logo"
+                    />
+                <div className={styles.text}>{market.name}</div>
+                </Col>
+                <Col md={5} className={styles.loadingContainer}>
+                <img
+                    src={LoadingIcon}
+                    width="auto"
+                    height="18"
+                    className="d-inline-block align-top"
+                    alt="loading"
+                    />
+                <div className={styles.text}>{t('Pending.LPRewardInProgress')}</div>
+                </Col>
+                <Col md={4} className={styles.actionContainer}>
+                    <FaExternalLinkAlt className={styles.icon} />
+                    <a className={styles.text} href={CoreData.getExplorerUrl(market.lpRewardTxnHash, networkType)} target="_blank">
+                        {t('Pending.ViewTransaction')}
+                    </a>
+                </Col>
+            </Row>
+        )
+    })
+
     return (
         <div className={styles.pending}>
             <Container className={styles.pendingContainer}>
                 {PendingDeposits}
                 {PendingWithdrawals}
+                {PendingBorrow}
+                {PendingRepay}
+                {PendingLPRewards}
             </Container>
         </div>
     )

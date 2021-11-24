@@ -23,6 +23,8 @@ import SwapRepayModal from './Modals/SwapRepayModal'
 
 function Accounts(props) {
 
+    console.log(props)
+
     const { connectedAddress } = useContext(WalletAddressContext)
     const { networkType } = useContext(NetworkTypeContext)
     const { web3 } = useContext(Web3Context)
@@ -318,7 +320,7 @@ function Accounts(props) {
                             <Row>
                                 {
                                     loading ? AccountsLoading
-                                    : props.data.totalSavingsBalance > 0 ? LoansAccounts
+                                    : props.data.totalLoanBalance > 0 ? LoansAccounts
                                     : LoansEmpty
                                 }
                                 {props.data.totalLoanBalance > 0 ? BorrowAsset : ''}
@@ -361,18 +363,18 @@ function Accounts(props) {
                 totalSavingsBalance={props.data.totalSavingsBalance}
             />
 
-            {/* <SwapRepayModal 
+            <SwapRepayModal 
                 show={showSwapRepayModal}
                 handleClose={() => handleClose('swapRepay')}
                 data={selectMarketData}
-                allData={props.data} /> */}
+                allData={props.data} />
 
-            {/* <DepositSwapModal
+            <DepositSwapModal
                 data={selectMarketData}
                 allData={props.data}
                 show={showDepositSwapModal}
                 handleClose={() => handleClose("depositSwap")}
-            /> */}
+            />
         </div>
     )
 }
